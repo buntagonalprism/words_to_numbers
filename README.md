@@ -4,31 +4,40 @@ Dart implementation of the [words_to_numbers](https://github.com/finnfiddle/word
 
 Converts words to numbers. Optionally fuzzy match the words to numbers.
 
-```
-npm install words-to-numbers
-```
+The returned value is always return a string. If you are expecting the entire string to be a number, then you can use the `tryParse` methods to get the numeric value:
 
-If the whole string passed is a number then it will return a `Number` type otherwise it will return the original string with all instances of numbers replaced.
+```dart
+import 'package:words_to_numbers/words_to_numbers.dart';
+
+void main() {
+    final String numberAsText = wordsToNumbers('three point five two');
+    final int intValue = int.tryParse(numberAsText); // Returns null
+    final double doubleValue = double.tryParse(numberAsText); // Returns 3.52
+    final num numValue = num.tryParse(numberAsText); // Returns 3.45
+}
+```
 
 ## Basic Examples
 
-```javascript
-import wordsToNumbers from 'words-to-numbers';
-wordsToNumbers('one hundred'); //100
-wordsToNumbers('one hundred and five'); //105
-wordsToNumbers('one hundred and twenty five'); //125
-wordsToNumbers('four thousand and thirty'); //4030
-wordsToNumbers('six million five thousand and two'); //6005002
-wordsToNumbers('a thousand one hundred and eleven'); //1111
-wordsToNumbers('twenty thousand five hundred and sixty nine'); //20569
-wordsToNumbers('five quintillion'); //5000000000000000000
-wordsToNumbers('one-hundred'); //100
-wordsToNumbers('one-hundred and five'); //105
-wordsToNumbers('one-hundred and twenty-five'); //125
-wordsToNumbers('four-thousand and thirty'); //4030
-wordsToNumbers('six-million five-thousand and two'); //6005002
-wordsToNumbers('a thousand, one-hundred and eleven'); //1111
-wordsToNumbers('twenty-thousand, five-hundred and sixty-nine'); //20569
+```dart
+import 'package:words_to_numbers/words_to_numbers.dart';
+void main() {
+    wordsToNumbers('one hundred'); //100
+    wordsToNumbers('one hundred and five'); //105
+    wordsToNumbers('one hundred and twenty five'); //125
+    wordsToNumbers('four thousand and thirty'); //4030
+    wordsToNumbers('six million five thousand and two'); //6005002
+    wordsToNumbers('a thousand one hundred and eleven'); //1111
+    wordsToNumbers('twenty thousand five hundred and sixty nine'); //20569
+    wordsToNumbers('five quintillion'); //5000000000000000000
+    wordsToNumbers('one-hundred'); //100
+    wordsToNumbers('one-hundred and five'); //105
+    wordsToNumbers('one-hundred and twenty-five'); //125
+    wordsToNumbers('four-thousand and thirty'); //4030
+    wordsToNumbers('six-million five-thousand and two'); //6005002
+    wordsToNumbers('a thousand, one-hundred and eleven'); //1111
+    wordsToNumbers('twenty-thousand, five-hundred and sixty-nine'); //20569
+}
 ```
 
 ## Multiple numbers in a string
