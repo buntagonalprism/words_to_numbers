@@ -33,7 +33,7 @@ String getNumber(Region region) {
       int currentDecimalPlace = 1;
       decimalUnits.forEach((decimalSubRegion) {
         decimalSubRegion.tokens.forEach((token) {
-          decimalSum += NUMBER[token.lowerCaseValue] / math.pow(10, currentDecimalPlace);
+          decimalSum += NUMBER[token.lowerCaseValue]! / math.pow(10, currentDecimalPlace);
           currentDecimalPlace += 1;
         });
       });
@@ -54,44 +54,44 @@ int subRegionSum(SubRegion subRegion) {
   final tokens = subRegion.tokens, type = subRegion.type;
   switch (type) {
     case TOKEN_TYPE.MAGNITUDE:
-    case TOKEN_TYPE.HUNDRED: {
-      subRegionSum = 1;
-      final tokensCount = tokens.length;
-      final acc = List<int>();
-      tokens.asMap().forEach((i, token) {
-        if (token.type == TOKEN_TYPE.HUNDRED) {
-          final List<Chunk> tokensToAdd = (tokensCount - 1) > 0 ? tokens.sublist(i + 1) : [];
-          final List<Chunk> filtered = [];
-          for (int j = 0; j < tokensToAdd.length; j++) {
-            if (j == 0 || tokensToAdd[j - 1].type.value > tokensToAdd[j].type.value) {
-              filtered.add(tokensToAdd[j]);
+    case TOKEN_TYPE.HUNDRED:
+      {
+        subRegionSum = 1;
+        final tokensCount = tokens.length;
+        final acc = <int>[];
+        tokens.asMap().forEach((i, token) {
+          if (token.type == TOKEN_TYPE.HUNDRED) {
+            final List<Chunk> tokensToAdd = (tokensCount - 1) > 0 ? tokens.sublist(i + 1) : [];
+            final List<Chunk> filtered = [];
+            for (int j = 0; j < tokensToAdd.length; j++) {
+              if (j == 0 || tokensToAdd[j - 1].type!.value > tokensToAdd[j].type!.value) {
+                filtered.add(tokensToAdd[j]);
+              }
             }
+            int tokensToAddSum = 0;
+            filtered.forEach((tokenToAdd) => tokensToAddSum += NUMBER[tokenToAdd.lowerCaseValue]!);
+            return acc.add(tokensToAddSum + (NUMBER[token.lowerCaseValue]! * 100));
           }
-          int tokensToAddSum = 0;
-          filtered.forEach((tokenToAdd) => tokensToAddSum += NUMBER[tokenToAdd.lowerCaseValue]);
-          return acc.add(tokensToAddSum + (NUMBER[token.lowerCaseValue] * 100));
-        }
-        if (i > 0 && tokens[i - 1].type == TOKEN_TYPE.HUNDRED) return;
-        if (
-          i > 1 &&
-          tokens[i - 1].type == TOKEN_TYPE.TEN &&
-          tokens[i - 2].type == TOKEN_TYPE.HUNDRED
-        ) return;
-        acc.add(NUMBER[token.lowerCaseValue]);
-      });
-      acc.forEach((tokenValue) {
-        subRegionSum *= tokenValue;
-      });
-      break;
-    }
+          if (i > 0 && tokens[i - 1].type == TOKEN_TYPE.HUNDRED) return;
+          if (i > 1 &&
+              tokens[i - 1].type == TOKEN_TYPE.TEN &&
+              tokens[i - 2].type == TOKEN_TYPE.HUNDRED) return;
+          acc.add(NUMBER[token.lowerCaseValue]!);
+        });
+        acc.forEach((tokenValue) {
+          subRegionSum *= tokenValue;
+        });
+        break;
+      }
     case TOKEN_TYPE.UNIT:
-    case TOKEN_TYPE.TEN: {
-      tokens.forEach((token) {
-        subRegionSum += NUMBER[token.lowerCaseValue];
-      });
-      break;
-    }
-    default: 
+    case TOKEN_TYPE.TEN:
+      {
+        tokens.forEach((token) {
+          subRegionSum += NUMBER[token.lowerCaseValue]!;
+        });
+        break;
+      }
+    default:
     // no operation
   }
   return subRegionSum;
@@ -110,7 +110,7 @@ String replaceRegionsInText(List<Region> regions, String text) {
 }
 
 String compile(List<Region> regions, String text) {
-  if (regions == null || regions.isEmpty) return text;
+  if (regions.isEmpty) return text;
   if (regions[0].end - regions[0].start == text.length - 1) return getNumber(regions[0]).toString();
   return replaceRegionsInText(regions, text);
 }

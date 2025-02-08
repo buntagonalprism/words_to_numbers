@@ -48,18 +48,6 @@ Returns a string with all instances replaced.
 wordsToNumbers('there were twenty-thousand, five-hundred and sixty-nine X in the five quintillion Y')) // 'there were 20569 X in the 5000000000000000000 Y'
 ```
 
-## With Fuzzy Matching
-
-Uses [Jaro distance](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) provided by the [edit_distance](https://pub.dev/packages/edit_distance) package to find the best match for the number words. Don't rely on this being completely accurate...
-
-```dart
-import 'package:words_to_numbers/words_to_numbers.dart';
-void main() {
-    wordsToNumbers('won huntred', Options(fuzzy: true)); //100
-    wordsToNumbers('too thousant and fiev', Options(fuzzy: true)); //2005
-    wordsToNumbers('tree millyon sefen hunderd and twinty sex', Options(fuzzy: true)); //3000726
-}
-```
 
 ## Decimal Points
 

@@ -1,16 +1,11 @@
 name: words_to_numbers
 description: Dart implementation of words to numbers for converting english text to numbers
 version: 1.0.0
-author: Alex Bunting <alex.bunting314@gmail.com>
 homepage: https://github.com/buntagonalprism/words_to_numbers
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-
-dependencies:
-  edit_distance: ^0.4.1
+  sdk: ^3.5.4
 
 dev_dependencies:
-  meta: 
   test: 
 

@@ -1,4 +1,4 @@
-String splice(String str, int index, int count, String add) {
+String splice(String str, int index, int count, String? add) {
   int i = index;
   if (i < 0) {
     i = str.length + i;

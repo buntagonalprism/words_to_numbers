@@ -1,8 +1,7 @@
-import 'package:words_to_numbers/words_to_numbers.dart';
 import 'package:test/test.dart';
+import 'package:words_to_numbers/words_to_numbers.dart';
 
 void main() {
-
   final wtn = wordsToNumbers;
 
   test('one hundred', () {
@@ -74,7 +73,9 @@ void main() {
   });
 
   test('there were twenty-thousand, five-hundred and sixty-nine X in the five quintillion Y', () {
-    expect(wtn('there were twenty-thousand, five-hundred and sixty-nine X in the five quintillion Y'), 'there were 20569 X in the 5000000000000000000 Y');
+    expect(
+        wtn('there were twenty-thousand, five-hundred and sixty-nine X in the five quintillion Y'),
+        'there were 20569 X in the 5000000000000000000 Y');
   });
 
   test('one two three', () {
@@ -83,20 +84,6 @@ void main() {
 
   test('test one two three test', () {
     expect(wtn('test one two three test'), 'test 1 2 3 test');
-  });
-
-  test('tu thousant and faav', () {
-    expect(wtn('too thousant and fiev', Options(fuzzy: true)), '2005');
-  });
-
-  // The following tests has been changed slightly for Dart, as the Jaro-Winkler
-  // distance implementation used performs differently on strings with 3 or fewer letters
-  test('onf huntred', () {
-    expect(wtn('onf huntred', Options(fuzzy: true)), '100');
-  });
-
-  test('tree millyon sefen hunderd ant twinty sex', () {
-    expect(wtn('tree millyon sefen hunderd and twinty sex', Options(fuzzy: true)), '3000726');
   });
 
   test('forty two point five', () {
@@ -331,6 +318,4 @@ void main() {
   // test('one hundred and two thousand', () {
   //   expect(wtn('one hundred and two thousand'), '102000');
   // });
-
 }
-

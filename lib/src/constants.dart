@@ -1,4 +1,3 @@
-
 const Map<String, int> UNIT = {
   'zero': 0,
   'first': 1,
@@ -72,13 +71,13 @@ const Map<String, int> MAGNITUDE = {
   'quintillion': 1000000000000000000,
 };
 
-const Map<String, int> NUMBER = { ...UNIT, ...TEN, ...MAGNITUDE };
+const Map<String, int> NUMBER = {...UNIT, ...TEN, ...MAGNITUDE};
 
 final List<String> UNIT_KEYS = UNIT.keys.toList();
 final List<String> TEN_KEYS = TEN.keys.toList();
 final List<String> MAGNITUDE_KEYS = MAGNITUDE.keys.toList();
 
-final List<String> NUMBER_WORDS = [ ...UNIT_KEYS, ...TEN_KEYS, ...MAGNITUDE_KEYS];
+final List<String> NUMBER_WORDS = [...UNIT_KEYS, ...TEN_KEYS, ...MAGNITUDE_KEYS];
 
 const List<String> JOINERS = ['and'];
 const List<String> DECIMALS = ['point', 'dot'];
@@ -118,21 +117,14 @@ enum TOKEN_TYPE {
 }
 
 extension TypeExtension on TOKEN_TYPE {
-
   int get value {
-    switch (this) {
-      case TOKEN_TYPE.UNIT:
-        return 0;
-      case TOKEN_TYPE.TEN:
-        return 1;
-      case TOKEN_TYPE.MAGNITUDE:
-        return 2;
-      case TOKEN_TYPE.DECIMAL:
-        return 3;
-      case TOKEN_TYPE.HUNDRED:
-        return 4;
-    }
-    throw "Null TOKEN_TYPE";
+    return switch (this) {
+      TOKEN_TYPE.UNIT => 0,
+      TOKEN_TYPE.TEN => 1,
+      TOKEN_TYPE.MAGNITUDE => 2,
+      TOKEN_TYPE.DECIMAL => 3,
+      TOKEN_TYPE.HUNDRED => 4
+    };
   }
 
   void talk() {
@@ -140,6 +132,6 @@ extension TypeExtension on TOKEN_TYPE {
   }
 }
 
-final List<String> ALL_WORDS = [ ...NUMBER_WORDS, ...JOINERS, ...DECIMALS ];
+final List<String> ALL_WORDS = [...NUMBER_WORDS, ...JOINERS, ...DECIMALS];
 
 const List<String> BLACKLIST_SINGULAR_WORDS = ['a'];
