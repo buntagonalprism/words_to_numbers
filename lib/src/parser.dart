@@ -172,39 +172,30 @@ List<Region> matchRegions(List<Chunk> tokens, options) {
     final tokenFits = checkIfTokenFitsRegion(currentRegion, token, options);
     switch (tokenFits) {
       case TokenFit.SKIP:
-        {
-          break;
-        }
+        break;
       case TokenFit.ADD:
-        {
-          if (currentRegion != null) {
-            currentRegion.end = token.end;
-            currentRegion.tokens.add(token);
-            if (token.type == TOKEN_TYPE.DECIMAL) {
-              currentRegion.hasDecimal = true;
-            }
-          }
-          break;
-        }
-      case TokenFit.START_NEW_REGION:
-        {
-          currentRegion = Region(
-            start: token.start,
-            end: token.end,
-            tokens: [token],
-          );
-          regions.add(currentRegion);
+        if (currentRegion != null) {
+          currentRegion.end = token.end;
+          currentRegion.tokens.add(token);
           if (token.type == TOKEN_TYPE.DECIMAL) {
             currentRegion.hasDecimal = true;
           }
-          break;
         }
+        break;
+      case TokenFit.START_NEW_REGION:
+        currentRegion = Region(
+          start: token.start,
+          end: token.end,
+          tokens: [token],
+        );
+        regions.add(currentRegion);
+        if (token.type == TOKEN_TYPE.DECIMAL) {
+          currentRegion.hasDecimal = true;
+        }
+        break;
       case TokenFit.NOPE:
-      default:
-        {
-          currentRegion = null;
-          break;
-        }
+        currentRegion = null;
+        break;
     }
     i++;
   }
